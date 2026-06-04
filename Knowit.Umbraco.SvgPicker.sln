@@ -1,0 +1,31 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knowit.Umbraco.SvgPicker", "src\Knowit.Umbraco.SvgPicker\Knowit.Umbraco.SvgPicker.csproj", "{873BBDE2-DDBB-4737-AC04-84227DF6BCA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Knowit.Umbraco.SvgPicker.TestSite", "testsite\Knowit.Umbraco.SvgPicker.TestSite\Knowit.Umbraco.SvgPicker.TestSite.csproj", "{B72B4399-6B95-47BE-884C-6740111C018B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{873BBDE2-DDBB-4737-AC04-84227DF6BCA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{873BBDE2-DDBB-4737-AC04-84227DF6BCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{873BBDE2-DDBB-4737-AC04-84227DF6BCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{873BBDE2-DDBB-4737-AC04-84227DF6BCA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72B4399-6B95-47BE-884C-6740111C018B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72B4399-6B95-47BE-884C-6740111C018B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72B4399-6B95-47BE-884C-6740111C018B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72B4399-6B95-47BE-884C-6740111C018B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE6FCCC0-67B5-4855-91A9-A0CD8DDCA618}
+	EndGlobalSection
+EndGlobal

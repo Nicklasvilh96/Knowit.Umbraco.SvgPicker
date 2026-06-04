@@ -1,0 +1,28 @@
+# Build output
+bin/
+obj/
+*.nupkg
+nupkgs/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Umbraco runtime
+testsite/*/umbraco/Data/
+testsite/*/umbraco/Logs/
+testsite/*/umbraco/mediacache/
+testsite/*/umbraco/DependencyInjection.lock
+testsite/*/*.sqlite.db
+testsite/*/*.sqlite.db-shm
+testsite/*/*.sqlite.db-wal
+
+# Node
+src/*/client/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db

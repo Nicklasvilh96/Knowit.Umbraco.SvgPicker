@@ -1,0 +1,58 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Knowit.Umbraco.SvgPicker.Extensions
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>SVG Picker Test</title>
+    <style>
+        body { font-family: system-ui, sans-serif; padding: 40px; background: #f5f5f5; }
+        .card { background: white; border-radius: 8px; padding: 32px; max-width: 480px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        h1 { margin: 0 0 24px; font-size: 18px; color: #333; }
+        .icon-row { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f9f9f9; border-radius: 6px; }
+        .icon-box { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; background: white; border: 1px solid #e0e0e0; border-radius: 6px; }
+        .icon-box svg { width: 28px; height: 28px; }
+        .icon-meta { font-size: 13px; color: #555; }
+        .icon-id { font-family: monospace; font-size: 12px; color: #888; margin-top: 2px; }
+        .empty { color: #aaa; font-style: italic; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>SVG Picker — render test</h1>
+
+        <p style="font-size:12px;color:#888;margin-bottom:16px">
+            Content: <strong>@Model.Name</strong> |
+            Properties: @string.Join(", ", Model.Properties.Select(p => p.Alias))
+        </p>
+
+        @{
+            var icon = Model.Value<string>("svg");
+        }
+
+        @if (!string.IsNullOrWhiteSpace(icon))
+        {
+            <div class="icon-row">
+                <div class="icon-box">
+                    @Html.SvgIcon(icon)
+                </div>
+                <div>
+                    <div class="icon-meta">Selected icon</div>
+                    <div class="icon-id">@icon</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p class="empty">No icon selected — raw property values:</p>
+            @foreach (var p in Model.Properties)
+            {
+                <p style="font-size:11px;font-family:monospace">@p.Alias = "@p.GetValue()"</p>
+            }
+        }
+    </div>
+</body>
+</html>

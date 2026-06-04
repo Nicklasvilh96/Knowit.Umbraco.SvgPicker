@@ -1,0 +1,36 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "Knowit.Umbraco.SvgPicker",
+  "version": "1.0.0",
+  "extensions": [
+    {
+      "type": "propertyEditorUi",
+      "alias": "Knowit.PropertyEditorUi.SvgPicker",
+      "name": "SVG Picker",
+      "element": "/App_Plugins/SvgPicker/svg-picker.js",
+      "elementName": "knowit-svg-picker",
+      "meta": {
+        "label": "SVG Picker",
+        "propertyEditorSchemaAlias": "Umbraco.TextBox",
+        "icon": "icon-picture",
+        "group": "pickers",
+        "settings": {
+          "properties": [
+            {
+              "alias": "svgPath",
+              "label": "SVG Sprite Path",
+              "description": "Absolute path to the SVG spritesheet served by the site (e.g. /assets/svg/sprite.svg)",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "editorTitle",
+              "label": "Picker Title",
+              "description": "Label shown above the icon grid (optional)",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
