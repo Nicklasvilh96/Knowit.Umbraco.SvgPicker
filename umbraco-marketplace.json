@@ -1,0 +1,32 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Title": "SVG Picker",
+  "Description": "Property editor for Umbraco 17 that adds a visual SVG icon picker to the backoffice. Editors browse and search symbols from any configured SVG spritesheet. Stores the symbol ID as a plain string and renders as svg/use in Razor via a built-in Html.SvgIcon() helper.",
+  "Category": "Editor Tools",
+  "LicenseTypes": ["Free"],
+  "PackageType": "Package",
+  "AuthorDetails": {
+    "Name": "Knowit",
+    "Url": "https://www.knowit.dk",
+    "Contributors": [
+      {
+        "Name": "Nicklas Vilhelmsen",
+        "Url": "https://github.com/Nicklasvilh96"
+      }
+    ],
+    "SyncContributorsFromRepository": true
+  },
+  "DocumentationUrl": "https://github.com/Nicklasvilh96/Knowit.Umbraco.SvgPicker#readme",
+  "IssueTrackerUrl": "https://github.com/Nicklasvilh96/Knowit.Umbraco.SvgPicker/issues",
+  "Screenshots": [
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/Nicklasvilh96/Knowit.Umbraco.SvgPicker/main/docs/screenshots/Selector.png",
+      "Caption": "SVG icon picker modal"
+    },
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/Nicklasvilh96/Knowit.Umbraco.SvgPicker/main/docs/screenshots/Selected.png",
+      "Caption": "Selected SVG icon in the property editor"
+    }
+  ],
+  "Tags": ["svg", "icon", "picker", "sprite", "property-editor"]
+}
