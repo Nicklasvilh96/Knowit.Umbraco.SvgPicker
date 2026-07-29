@@ -1,101 +1,138 @@
-var v = (i) => {
-  throw TypeError(i);
+var __typeError = (msg) => {
+  throw TypeError(msg);
 };
-var y = (i, o, e) => o.has(i) || v("Cannot " + e);
-var a = (i, o, e) => (y(i, o, "read from private field"), e ? e.call(i) : o.get(i)), m = (i, o, e) => o.has(i) ? v("Cannot add the same private member more than once") : o instanceof WeakSet ? o.add(i) : o.set(i, e);
-var n = (i, o, e) => (y(i, o, "access private method"), e);
-import { LitElement as C, html as s, nothing as h, css as E } from "@umbraco-cms/backoffice/external/lit";
-import { UmbPropertyValueChangeEvent as w } from "@umbraco-cms/backoffice/property-editor";
-var r, l, g, b, k, _, $, u, z, S;
-const p = class p extends C {
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot add the same private member more than once") : member instanceof WeakSet ? member.add(obj) : member.set(obj, value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
+var _KnowitSvgPickerElement_instances, svgPath_get, versionedSvgPath_get, editorTitle_get, loadSymbols_fn, select_fn, clear_fn, filtered_get, renderSymbol_fn, renderTrigger_fn, renderOverlay_fn;
+import { LitElement, html, nothing, css } from "@umbraco-cms/backoffice/external/lit";
+import { UmbPropertyValueChangeEvent } from "@umbraco-cms/backoffice/property-editor";
+const _KnowitSvgPickerElement = class _KnowitSvgPickerElement extends LitElement {
   constructor() {
     super(...arguments);
-    m(this, r);
-    this.value = "", this.config = [], this._symbols = [], this._loading = !1, this._error = null, this._filter = "", this._open = !1;
+    __privateAdd(this, _KnowitSvgPickerElement_instances);
+    this.value = "";
+    this.config = [];
+    this._symbols = [];
+    this._loading = false;
+    this._error = null;
+    this._filter = "";
+    this._open = false;
+    this._cacheBust = Date.now();
   }
   connectedCallback() {
-    super.connectedCallback(), a(this, r, l) && n(this, r, b).call(this);
+    super.connectedCallback();
+    if (__privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get)) __privateMethod(this, _KnowitSvgPickerElement_instances, loadSymbols_fn).call(this);
   }
-  updated(e) {
-    e.has("config") && a(this, r, l) && this._symbols.length === 0 && !this._loading && n(this, r, b).call(this);
+  updated(changed) {
+    if (changed.has("config") && __privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get) && this._symbols.length === 0 && !this._loading) {
+      __privateMethod(this, _KnowitSvgPickerElement_instances, loadSymbols_fn).call(this);
+    }
   }
   render() {
-    return a(this, r, l) ? s`
+    if (!__privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get)) {
+      return html`<p class="notice">Configure an SVG sprite path on the data type.</p>`;
+    }
+    return html`
       <div class="picker">
-        ${this._open ? n(this, r, S).call(this) : n(this, r, z).call(this)}
+        ${this._open ? __privateMethod(this, _KnowitSvgPickerElement_instances, renderOverlay_fn).call(this) : __privateMethod(this, _KnowitSvgPickerElement_instances, renderTrigger_fn).call(this)}
       </div>
-    ` : s`<p class="notice">Configure an SVG sprite path on the data type.</p>`;
+    `;
   }
 };
-r = new WeakSet(), l = function() {
-  var e, t;
-  return ((t = (e = this.config) == null ? void 0 : e.find((d) => d.alias === "svgPath")) == null ? void 0 : t.value) ?? "";
-}, g = function() {
-  var e, t;
-  return ((t = (e = this.config) == null ? void 0 : e.find((d) => d.alias === "editorTitle")) == null ? void 0 : t.value) ?? "Select icon";
-}, b = async function() {
-  this._loading = !0, this._error = null;
+_KnowitSvgPickerElement_instances = new WeakSet();
+svgPath_get = function() {
+  var _a, _b;
+  return ((_b = (_a = this.config) == null ? void 0 : _a.find((c) => c.alias === "svgPath")) == null ? void 0 : _b.value) ?? "";
+};
+versionedSvgPath_get = function() {
+  const separator = __privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get).includes("?") ? "&" : "?";
+  return `${__privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get)}${separator}v=${this._cacheBust}`;
+};
+editorTitle_get = function() {
+  var _a, _b;
+  return ((_b = (_a = this.config) == null ? void 0 : _a.find((c) => c.alias === "editorTitle")) == null ? void 0 : _b.value) ?? "Select icon";
+};
+loadSymbols_fn = async function() {
+  this._loading = true;
+  this._error = null;
+  this._cacheBust = Date.now();
   try {
-    const e = await fetch(a(this, r, l));
-    if (!e.ok) throw new Error(`${e.status} ${e.statusText}`);
-    const t = await e.text(), x = new DOMParser().parseFromString(t, "image/svg+xml");
-    if (x.querySelector("parsererror")) throw new Error("Invalid SVG file");
-    this._symbols = Array.from(x.querySelectorAll("symbol")).map((c) => ({
-      id: c.getAttribute("id") ?? "",
-      viewBox: c.getAttribute("viewBox") ?? "0 0 24 24"
-    })).filter((c) => c.id);
+    const res = await fetch(__privateGet(this, _KnowitSvgPickerElement_instances, svgPath_get), { cache: "no-store" });
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+    const text = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, "image/svg+xml");
+    const parserError = doc.querySelector("parsererror");
+    if (parserError) throw new Error("Invalid SVG file");
+    this._symbols = Array.from(doc.querySelectorAll("symbol")).map((sym) => ({
+      id: sym.getAttribute("id") ?? "",
+      viewBox: sym.getAttribute("viewBox") ?? "0 0 24 24"
+    })).filter((s) => s.id);
   } catch (e) {
     this._error = e instanceof Error ? e.message : "Failed to load sprite";
   } finally {
-    this._loading = !1;
+    this._loading = false;
   }
-}, k = function(e) {
-  this.value = e, this._open = !1, this._filter = "", this.dispatchEvent(new w());
-}, _ = function() {
-  this.value = "", this.dispatchEvent(new w());
-}, $ = function() {
-  const e = this._filter.toLowerCase();
-  return e ? this._symbols.filter((t) => t.id.toLowerCase().includes(e)) : this._symbols;
-}, u = function(e, t = 40) {
-  return s`
-      <svg width="${t}" height="${t}" aria-hidden="true">
-        <use href="${a(this, r, l)}#${e}"></use>
+};
+select_fn = function(id) {
+  this.value = id;
+  this._open = false;
+  this._filter = "";
+  this.dispatchEvent(new UmbPropertyValueChangeEvent());
+};
+clear_fn = function() {
+  this.value = "";
+  this.dispatchEvent(new UmbPropertyValueChangeEvent());
+};
+filtered_get = function() {
+  const q = this._filter.toLowerCase();
+  return q ? this._symbols.filter((s) => s.id.toLowerCase().includes(q)) : this._symbols;
+};
+renderSymbol_fn = function(id, size = 40) {
+  return html`
+      <svg width="${size}" height="${size}" aria-hidden="true">
+        <use href="${__privateGet(this, _KnowitSvgPickerElement_instances, versionedSvgPath_get)}#${id}"></use>
       </svg>
     `;
-}, z = function() {
-  return s`
+};
+renderTrigger_fn = function() {
+  return html`
       <div class="trigger">
-        ${this.value ? s`
+        ${this.value ? html`
           <div class="preview">
-            <div class="preview-icon">${n(this, r, u).call(this, this.value, 48)}</div>
+            <div class="preview-icon">${__privateMethod(this, _KnowitSvgPickerElement_instances, renderSymbol_fn).call(this, this.value, 48)}</div>
             <div class="preview-meta">
               <span class="preview-id">${this.value}</span>
             </div>
           </div>
           <div class="trigger-actions">
             <button class="btn" @click=${() => {
-    this._open = !0;
+    this._open = true;
   }}>Change</button>
-            <button class="btn btn-ghost" @click=${n(this, r, _)}>Clear</button>
+            <button class="btn btn-ghost" @click=${__privateMethod(this, _KnowitSvgPickerElement_instances, clear_fn)}>Clear</button>
           </div>
-        ` : s`
+        ` : html`
           <button class="btn-pick" @click=${() => {
-    this._open = !0;
+    this._open = true;
   }}>
             <span class="btn-pick-icon">+</span>
-            ${a(this, r, g)}
+            ${__privateGet(this, _KnowitSvgPickerElement_instances, editorTitle_get)}
           </button>
         `}
       </div>
     `;
-}, S = function() {
-  const e = a(this, r, $);
-  return s`
+};
+renderOverlay_fn = function() {
+  const filtered = __privateGet(this, _KnowitSvgPickerElement_instances, filtered_get);
+  return html`
       <div class="overlay">
         <div class="overlay-header">
-          <span class="overlay-title">${a(this, r, g)}</span>
+          <span class="overlay-title">${__privateGet(this, _KnowitSvgPickerElement_instances, editorTitle_get)}</span>
           <button class="btn-close" @click=${() => {
-    this._open = !1, this._filter = "";
+    this._open = false;
+    this._filter = "";
   }}>✕</button>
         </div>
         <div class="overlay-search">
@@ -104,37 +141,40 @@ r = new WeakSet(), l = function() {
             type="search"
             placeholder="Search icons…"
             .value=${this._filter}
-            @input=${(t) => {
-    this._filter = t.target.value;
+            @input=${(e) => {
+    this._filter = e.target.value;
   }} />
         </div>
         <div class="overlay-body">
-          ${this._loading ? s`<div class="loading"><div class="spinner"></div></div>` : h}
-          ${this._error ? s`<p class="error">${this._error}</p>` : h}
-          ${!this._loading && !this._error && e.length === 0 ? s`<p class="empty">${this._filter ? "No matches." : "No symbols found in sprite."}</p>` : h}
+          ${this._loading ? html`<div class="loading"><div class="spinner"></div></div>` : nothing}
+          ${this._error ? html`<p class="error">${this._error}</p>` : nothing}
+          ${!this._loading && !this._error && filtered.length === 0 ? html`<p class="empty">${this._filter ? "No matches." : "No symbols found in sprite."}</p>` : nothing}
           <div class="grid">
-            ${e.map((t) => s`
+            ${filtered.map((sym) => html`
               <button
-                class="grid-item ${this.value === t.id ? "active" : ""}"
-                title="${t.id}"
-                @click=${() => n(this, r, k).call(this, t.id)}>
-                ${n(this, r, u).call(this, t.id, 32)}
-                <span class="grid-label">${t.id}</span>
+                class="grid-item ${this.value === sym.id ? "active" : ""}"
+                title="${sym.id}"
+                @click=${() => __privateMethod(this, _KnowitSvgPickerElement_instances, select_fn).call(this, sym.id)}>
+                ${__privateMethod(this, _KnowitSvgPickerElement_instances, renderSymbol_fn).call(this, sym.id, 32)}
+                <span class="grid-label">${sym.id}</span>
               </button>
             `)}
           </div>
         </div>
       </div>
     `;
-}, p.properties = {
+};
+_KnowitSvgPickerElement.properties = {
   value: { type: String },
-  config: { attribute: !1 },
-  _symbols: { state: !0 },
-  _loading: { state: !0 },
-  _error: { state: !0 },
-  _filter: { state: !0 },
-  _open: { state: !0 }
-}, p.styles = E`
+  config: { attribute: false },
+  _symbols: { state: true },
+  _loading: { state: true },
+  _error: { state: true },
+  _filter: { state: true },
+  _open: { state: true },
+  _cacheBust: { state: true }
+};
+_KnowitSvgPickerElement.styles = css`
     :host { display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
 
     .notice { color: #888; font-size: 13px; font-style: italic; }
@@ -226,8 +266,8 @@ r = new WeakSet(), l = function() {
     }
     .grid-item.active .grid-label { color: #1c85c7; font-weight: 600; }
   `;
-let f = p;
-customElements.define("knowit-svg-picker", f);
+let KnowitSvgPickerElement = _KnowitSvgPickerElement;
+customElements.define("knowit-svg-picker", KnowitSvgPickerElement);
 export {
-  f as default
+  KnowitSvgPickerElement as default
 };
