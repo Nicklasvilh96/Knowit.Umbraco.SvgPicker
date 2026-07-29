@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-07-29
+
+### Added
+- SVG Sprite Path setting now uses a static-file picker (filtered to `.svg`) instead of a free-text input
+
+### Fixed
+- Sprite fetch and icon previews bypass the browser cache, so newly added icons show up without a hard refresh
+
 ## [1.0.1] - 2026-06-04
 
 ### Changed
