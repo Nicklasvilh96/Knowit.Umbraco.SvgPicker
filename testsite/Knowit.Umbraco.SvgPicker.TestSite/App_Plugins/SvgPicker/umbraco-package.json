@@ -19,8 +19,8 @@
             {
               "alias": "svgPath",
               "label": "SVG Sprite Path",
-              "description": "Absolute path to the SVG spritesheet served by the site (e.g. /assets/svg/sprite.svg)",
-              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+              "description": "The SVG spritesheet served by the site, picked from the site's static files (e.g. /assets/svg/sprite.svg)",
+              "propertyEditorUiAlias": "Knowit.PropertyEditorUi.SvgSpritePathPicker"
             },
             {
               "alias": "editorTitle",
@@ -30,6 +30,19 @@
             }
           ]
         }
+      }
+    },
+    {
+      "type": "propertyEditorUi",
+      "alias": "Knowit.PropertyEditorUi.SvgSpritePathPicker",
+      "name": "SVG Sprite Path Picker",
+      "element": "/App_Plugins/SvgPicker/svg-sprite-path-picker.js",
+      "elementName": "knowit-svg-sprite-path-picker",
+      "meta": {
+        "label": "SVG Sprite Path Picker",
+        "propertyEditorSchemaAlias": "Umbraco.TextBox",
+        "icon": "icon-document",
+        "group": "pickers"
       }
     }
   ]

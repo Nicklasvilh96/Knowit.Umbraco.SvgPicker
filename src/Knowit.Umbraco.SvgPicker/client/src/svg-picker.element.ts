@@ -15,6 +15,7 @@ class KnowitSvgPickerElement extends LitElement {
     _error:    { state: true },
     _filter:   { state: true },
     _open:     { state: true },
+    _cacheBust: { state: true },
   };
 
   value: string = '';
@@ -25,9 +26,15 @@ class KnowitSvgPickerElement extends LitElement {
   private _error: string | null = null;
   private _filter = '';
   private _open = false;
+  private _cacheBust = Date.now();
 
   get #svgPath(): string {
     return (this.config?.find(c => c.alias === 'svgPath')?.value as string) ?? '';
+  }
+
+  get #versionedSvgPath(): string {
+    const separator = this.#svgPath.includes('?') ? '&' : '?';
+    return `${this.#svgPath}${separator}v=${this._cacheBust}`;
   }
 
   get #editorTitle(): string {
@@ -48,8 +55,9 @@ class KnowitSvgPickerElement extends LitElement {
   async #loadSymbols() {
     this._loading = true;
     this._error = null;
+    this._cacheBust = Date.now();
     try {
-      const res = await fetch(this.#svgPath);
+      const res = await fetch(this.#svgPath, { cache: 'no-store' });
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       const text = await res.text();
       const parser = new DOMParser();
@@ -89,7 +97,7 @@ class KnowitSvgPickerElement extends LitElement {
   #renderSymbol(id: string, size = 40) {
     return html`
       <svg width="${size}" height="${size}" aria-hidden="true">
-        <use href="${this.#svgPath}#${id}"></use>
+        <use href="${this.#versionedSvgPath}#${id}"></use>
       </svg>
     `;
   }
